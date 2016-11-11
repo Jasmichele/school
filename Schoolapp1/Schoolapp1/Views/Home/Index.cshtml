@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<div class="jumbotron">
+    <h1 class="center">HARVARD</h1>
+    <link rel="stylesheet" href="~/Content/Site.css" />
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Students</h2>
+        <p class="btn btn-default">@Html.ActionLink("New Student", "Create", "Students")</p>
+    </div>
+    <div class="col-md-4">
+        <h2>Courses</h2>
+        <p class="btn btn-default">@Html.ActionLink("Courses>>", "Index", "Courses")</p>
+    </div>
+</div>
+

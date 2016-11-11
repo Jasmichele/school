@@ -12,7 +12,7 @@ namespace Schoolapp1.Controllers
 {
     public class StudentsController : Controller
     {
-        private SchoolEntities db = new SchoolEntities();
+        private SchoolEntities1 db = new SchoolEntities1();
         // GET: Students
         public ActionResult Index()
         {
@@ -109,5 +109,6 @@ namespace Schoolapp1.Controllers
             }
             base.Dispose(disposing);
         }
+       
     }
 }

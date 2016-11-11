@@ -16,13 +16,13 @@ namespace Schoolapp1
     {
         public Cours()
         {
-            this.students = new HashSet<student>();
+            this.StudentCourses = new HashSet<StudentCours>();
         }
     
         public int CourseID { get; set; }
         public string CourseName { get; set; }
         public string CourseDesc { get; set; }
     
-        public virtual ICollection<student> students { get; set; }
+        public virtual ICollection<StudentCours> StudentCourses { get; set; }
     }
 }

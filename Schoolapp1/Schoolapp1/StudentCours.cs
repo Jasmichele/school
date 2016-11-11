@@ -12,16 +12,13 @@ namespace Schoolapp1
     using System;
     using System.Collections.Generic;
     
-    public partial class student
+    public partial class StudentCours
     {
-        public student()
-        {
-            this.StudentCourses = new HashSet<StudentCours>();
-        }
+        public int StudentsID { get; set; }
+        public int CoursesID { get; set; }
+        public int Anything { get; set; }
     
-        public int StudeneID { get; set; }
-        public string StudentName { get; set; }
-    
-        public virtual ICollection<StudentCours> StudentCourses { get; set; }
+        public virtual Cours Cours { get; set; }
+        public virtual student student { get; set; }
     }
 }

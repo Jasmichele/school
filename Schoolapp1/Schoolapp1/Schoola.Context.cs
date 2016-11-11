@@ -13,10 +13,10 @@ namespace Schoolapp1
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class SchoolEntities : DbContext
+    public partial class SchoolEntities1 : DbContext
     {
-        public SchoolEntities()
-            : base("name=SchoolEntities")
+        public SchoolEntities1()
+            : base("name=SchoolEntities1")
         {
         }
     
@@ -27,5 +27,6 @@ namespace Schoolapp1
     
         public DbSet<Cours> Courses { get; set; }
         public DbSet<student> students { get; set; }
+        public DbSet<StudentCours> StudentCourses { get; set; }
     }
 }

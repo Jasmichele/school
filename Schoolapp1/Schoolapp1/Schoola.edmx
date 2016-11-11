@@ -27,6 +27,7 @@
           </Key>
           <Property Name="StudentsID" Type="int" Nullable="false" />
           <Property Name="CoursesID" Type="int" Nullable="false" />
+          <Property Name="Anything" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK_StudentCourses_Courses">
           <End Role="Courses" Type="Self.Courses" Multiplicity="1" />
@@ -77,7 +78,7 @@
           <Property Name="CourseID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CourseName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CourseDesc" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="students" Relationship="Self.StudentCourses" FromRole="Courses" ToRole="student" />
+          <NavigationProperty Name="StudentCourses" Relationship="Self.FK_StudentCourses_Courses" FromRole="Courses" ToRole="StudentCourses" />
         </EntityType>
         <EntityType Name="student">
           <Key>
@@ -85,18 +86,54 @@
           </Key>
           <Property Name="StudeneID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="StudentName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Courses" Relationship="Self.StudentCourses" FromRole="student" ToRole="Courses" />
+          <NavigationProperty Name="StudentCourses" Relationship="Self.FK_StudentCourses_student" FromRole="student" ToRole="StudentCourses" />
         </EntityType>
-        <Association Name="StudentCourses">
-          <End Role="Courses" Type="Self.Cours" Multiplicity="*" />
-          <End Role="student" Type="Self.student" Multiplicity="*" />
+        <EntityType Name="StudentCours">
+          <Key>
+            <PropertyRef Name="StudentsID" />
+            <PropertyRef Name="CoursesID" />
+          </Key>
+          <Property Name="StudentsID" Type="Int32" Nullable="false" />
+          <Property Name="CoursesID" Type="Int32" Nullable="false" />
+          <Property Name="Anything" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Cours" Relationship="Self.FK_StudentCourses_Courses" FromRole="StudentCourses" ToRole="Courses" />
+          <NavigationProperty Name="student" Relationship="Self.FK_StudentCourses_student" FromRole="StudentCourses" ToRole="student" />
+        </EntityType>
+        <Association Name="FK_StudentCourses_Courses">
+          <End Role="Courses" Type="Self.Cours" Multiplicity="1" />
+          <End Role="StudentCourses" Type="Self.StudentCours" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Courses">
+              <PropertyRef Name="CourseID" />
+            </Principal>
+            <Dependent Role="StudentCourses">
+              <PropertyRef Name="CoursesID" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="SchoolEntities" annotation:LazyLoadingEnabled="true">
+        <Association Name="FK_StudentCourses_student">
+          <End Role="student" Type="Self.student" Multiplicity="1" />
+          <End Role="StudentCourses" Type="Self.StudentCours" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="student">
+              <PropertyRef Name="StudeneID" />
+            </Principal>
+            <Dependent Role="StudentCourses">
+              <PropertyRef Name="StudentsID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SchoolEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Courses" EntityType="Self.Cours" />
           <EntitySet Name="students" EntityType="Self.student" />
-          <AssociationSet Name="StudentCourses" Association="Self.StudentCourses">
+          <EntitySet Name="StudentCourses" EntityType="Self.StudentCours" />
+          <AssociationSet Name="FK_StudentCourses_Courses" Association="Self.FK_StudentCourses_Courses">
             <End Role="Courses" EntitySet="Courses" />
+            <End Role="StudentCourses" EntitySet="StudentCourses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StudentCourses_student" Association="Self.FK_StudentCourses_student">
             <End Role="student" EntitySet="students" />
+            <End Role="StudentCourses" EntitySet="StudentCourses" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -104,7 +141,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="SchoolModelStoreContainer" CdmEntityContainer="SchoolEntities">
+        <EntityContainerMapping StorageEntityContainer="SchoolModelStoreContainer" CdmEntityContainer="SchoolEntities1">
           <EntitySetMapping Name="Courses">
             <EntityTypeMapping TypeName="SchoolModel.Cours">
               <MappingFragment StoreEntitySet="Courses">
@@ -122,14 +159,15 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="StudentCourses" TypeName="SchoolModel.StudentCourses" StoreEntitySet="StudentCourses">
-            <EndProperty Name="Courses">
-              <ScalarProperty Name="CourseID" ColumnName="CoursesID" />
-            </EndProperty>
-            <EndProperty Name="student">
-              <ScalarProperty Name="StudeneID" ColumnName="StudentsID" />
-            </EndProperty>
-          </AssociationSetMapping>
+          <EntitySetMapping Name="StudentCourses">
+            <EntityTypeMapping TypeName="SchoolModel.StudentCours">
+              <MappingFragment StoreEntitySet="StudentCourses">
+                <ScalarProperty Name="StudentsID" ColumnName="StudentsID" />
+                <ScalarProperty Name="CoursesID" ColumnName="CoursesID" />
+                <ScalarProperty Name="Anything" ColumnName="Anything" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -13,5 +13,19 @@ namespace Schoolapp1.Controllers
         {
             return View();
         }
+
+        public ActionResult About()
+        {
+            ViewBag.Message = "Your Application Description page.";
+
+            return View();
+        }
+
+        public ActionResult Contact()
+        {
+            ViewBag.Message = "Your Contact page.";
+
+            return View();
+        }
     }
 }
