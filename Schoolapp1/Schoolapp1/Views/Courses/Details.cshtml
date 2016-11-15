@@ -1,4 +1,4 @@
-﻿@model Schoolapp1.Cours
+﻿@model Schoolapp1.Models.Co
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_layout.cshtml";
@@ -6,27 +6,30 @@
 
 <h2>Details</h2>
 
-<div>
-    <h4>Course</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.CourseName)
-        </dt>
-        <dt>
-            @Html.DisplayNameFor(model => model.CourseDesc)
-        </dt>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.MyCourse.CourseName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MyStudent)
+        </th>
 
-        <dd>
-            @Html.DisplayFor(model => model.CourseName)
-        </dd>
-        <dd>
-            @Html.DisplayFor(model => model.CourseDesc)
-        </dd>
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id=Model.CourseID}) |
-    @Html.ActionLink("Back To List", "Index")
-</p>
+    </tr>
+    <tr>
+        <td>
+            @Html.DisplayFor(model => model.MyCourse.CourseName)
+        </td>
+        <td></td>
+    </tr>
+@foreach (var item in Model.MyStudent)
+{ 
+     <tr>
+        <td></td>
+        <td>
+            @Html.DisplayFor(modelitem => item.StudentName)
+        </td>
+    </tr>
+}
+</table>
 

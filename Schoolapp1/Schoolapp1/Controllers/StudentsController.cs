@@ -6,7 +6,7 @@ using System.Web.Mvc;
 using System.Data.Entity;
 using System.Net;
 using Schoolapp1;
-
+using Schoolapp1.Models;
 
 namespace Schoolapp1.Controllers
 {
@@ -21,16 +21,22 @@ namespace Schoolapp1.Controllers
 
         public ActionResult Details(int? id)
         {
-            if(id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            student students = db.students.Find(id);
-            if(students == null)
-            {
-                return HttpNotFound();
-            }
-            return View(students);
+            var catalog = from sc in db.StudentCourses
+                          join c in db.Courses
+                          on sc.CoursesID equals c.CourseID
+                          where sc.StudentsID == id
+                          select c;
+
+            var st = (from sc in db.students
+                      where sc.StudeneID == id
+                      select sc).FirstOrDefault();
+
+            cat chris = new cat();
+            chris.Courses = catalog.ToList();
+            chris.Student = st;
+
+
+            return View(chris);
         }
 
         public ActionResult Create()
@@ -42,7 +48,7 @@ namespace Schoolapp1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "StudeneID,StudentName")] student students)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 db.students.Add(students);
                 db.SaveChanges();
@@ -53,12 +59,12 @@ namespace Schoolapp1.Controllers
 
         public ActionResult Edit(int? id)
         {
-            if(id == null)
+            if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             student students = db.students.Find(id);
-            if(students == null)
+            if (students == null)
             {
                 return HttpNotFound();
             }
@@ -68,9 +74,9 @@ namespace Schoolapp1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "StudeneID,StudentName")] student students)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                db.Entry(students).State = System.Data.EntityState.Modified;
+                db.Entry(students).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -79,12 +85,12 @@ namespace Schoolapp1.Controllers
 
         public ActionResult Delete(int? id)
         {
-            if(id == null)
+            if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             student students = db.students.Find(id);
-            if(students == null)
+            if (students == null)
             {
                 return HttpNotFound();
             }
@@ -103,12 +109,12 @@ namespace Schoolapp1.Controllers
 
         protected override void Dispose(bool disposing)
         {
-            if(disposing)
+            if (disposing)
             {
                 db.Dispose();
             }
             base.Dispose(disposing);
         }
-       
+
     }
 }

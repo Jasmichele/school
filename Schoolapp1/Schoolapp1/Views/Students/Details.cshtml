@@ -1,4 +1,4 @@
-﻿@model Schoolapp1.student
+﻿@model Schoolapp1.Models.cat
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_layout.cshtml";
@@ -6,22 +6,32 @@
 
 <h2>Details</h2>
 
-<div>
-    <h4>Student</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.StudentName)
-        </dt>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Student.StudentName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Courses)
+        </th>
 
-        <dd>
-            @Html.DisplayFor(model => model.StudentName)
-        </dd>
+    </tr>
+    <tr>
+        <td>
+            @Html.DisplayFor(model => model.Student.StudentName)
+        </td>
+        <td></td>
+    </tr>
+@foreach (var item in Model.Courses)
+{
+    <tr>
+        <td></td>
+        <td>
+            @Html.DisplayFor(modelitem => item.CourseName)
+        </td>
+    </tr>
 
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id=Model.StudeneID}) |
-    @Html.ActionLink("Back To List", "Index")
-</p>
+}
+
+</table>
 

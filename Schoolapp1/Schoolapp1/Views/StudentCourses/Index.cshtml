@@ -1,0 +1,43 @@
+﻿@model IEnumerable<Schoolapp1.StudentCours>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<h2>Index</h2>
+
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.student.StudentName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Cours.CourseName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Anything)
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelitem => item.student.StudentName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelitem => item.Cours.CourseName)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.StudentsID}) |
+                @Html.ActionLink("Details", "Details", new { id = item.StudentsID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.StudentsID})
+            </td>
+        </tr>
+
+    }
+</table>

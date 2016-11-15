@@ -24,5 +24,10 @@ namespace Schoolapp1
         public string CourseDesc { get; set; }
     
         public virtual ICollection<StudentCours> StudentCourses { get; set; }
+
+        public static implicit operator List<object>(Cours v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
